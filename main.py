@@ -6,18 +6,19 @@ from PIL import Image, ImageDraw, ImageFont, ImageColor
 from fonts.ttf import RobotoMedium
 
 inky_display = auto(ask_user=True, verbose=True)
-inky_display.h_flip = os.environ.get('FLIP_H', True)
-inky_display.v_flip = os.environ.get('FLIP_V', True)
-
 WIDTH, HEIGHT = inky_display.resolution
+SMALL_DISPLAY = WIDTH == 212
+ROTATE = os.environ.get('ROTATE', 0 if SMALL_DISPLAY else 180)
+
 COLOR = inky_display.colour
 BLACK = inky_display.BLACK
 WHITE = inky_display.WHITE
 
-font_smiley = ImageFont.truetype("CODE2000.TTF", 28)
-font = ImageFont.truetype(RobotoMedium, 16)
+font_smiley = ImageFont.truetype("CODE2000.TTF", 28 if SMALL_DISPLAY else 72)
+font = ImageFont.truetype(RobotoMedium, 16 if SMALL_DISPLAY else 64)
 
 img = Image.new("P", (WIDTH, HEIGHT))
+img = img.rotate(ROTATE)
 draw = ImageDraw.Draw(img)
 
 draw.rectangle((0, 0, WIDTH, HEIGHT), fill=WHITE)
@@ -27,9 +28,9 @@ def draw_credits(text, h):
   x,y = 16, (h - int(text_h * 0.25))
   draw.text((x, y), text, font=font_smiley, fill=BLACK)
 
-draw_credits("¯\_(ツ)_/¯", HEIGHT*0.05)
-draw_credits("promethee", HEIGHT*0.35)
-draw_credits("@github", HEIGHT*0.65)
+draw_credits("¯\_(ツ)_/¯", HEIGHT*(0.05 if SMALL_DISPLAY else 0.1))
+draw_credits("promethee", HEIGHT*(0.35 if SMALL_DISPLAY else 0.4))
+draw_credits("@github", HEIGHT*(0.65 if SMALL_DISPLAY else 0.7))
 inky_display.set_image(img)
 inky_display.show(img)
 
