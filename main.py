@@ -8,8 +8,6 @@ from fonts.ttf import RobotoMedium
 inky_display = auto(ask_user=True, verbose=True)
 WIDTH, HEIGHT = inky_display.resolution
 SMALL_DISPLAY = WIDTH == 212
-inky_display.h_flip = os.environ.get('FLIP_H', SMALL_DISPLAY)
-inky_display.v_flip = os.environ.get('FLIP_V', SMALL_DISPLAY)
 
 COLOR = inky_display.colour
 BLACK = inky_display.BLACK
@@ -20,6 +18,10 @@ font = ImageFont.truetype(RobotoMedium, 16 if SMALL_DISPLAY else 64)
 
 img = Image.new("P", (WIDTH, HEIGHT))
 draw = ImageDraw.Draw(img)
+
+inky_display.set_border(inky_display.BLACK)
+inky_display.h_flip = os.environ.get('FLIP_H', SMALL_DISPLAY)
+inky_display.v_flip = os.environ.get('FLIP_V', SMALL_DISPLAY)
 
 draw.rectangle((0, 0, WIDTH, HEIGHT), fill=WHITE)
 
