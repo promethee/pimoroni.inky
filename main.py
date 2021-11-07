@@ -8,7 +8,8 @@ from fonts.ttf import RobotoMedium
 inky_display = auto(ask_user=True, verbose=True)
 WIDTH, HEIGHT = inky_display.resolution
 SMALL_DISPLAY = WIDTH == 212
-ROTATE = os.environ.get('ROTATE', 0 if SMALL_DISPLAY else 180)
+inky_display.h_flip = os.environ.get('FLIP_H', SMALL_DISPLAY)
+inky_display.v_flip = os.environ.get('FLIP_V', SMALL_DISPLAY)
 
 COLOR = inky_display.colour
 BLACK = inky_display.BLACK
@@ -18,7 +19,6 @@ font_smiley = ImageFont.truetype("CODE2000.TTF", 28 if SMALL_DISPLAY else 72)
 font = ImageFont.truetype(RobotoMedium, 16 if SMALL_DISPLAY else 64)
 
 img = Image.new("P", (WIDTH, HEIGHT))
-img = img.rotate(ROTATE)
 draw = ImageDraw.Draw(img)
 
 draw.rectangle((0, 0, WIDTH, HEIGHT), fill=WHITE)
