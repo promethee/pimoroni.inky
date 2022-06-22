@@ -5,7 +5,7 @@ font-roboto==0.0.1
 font-source-serif-pro==0.0.1
 fonts==0.0.3
 inky==1.2.2
-numpy==1.21.4
+numpy==1.22.0
 Pillow==9.0.1
 RPi.GPIO==0.7.0
 smbus2==0.4.1
